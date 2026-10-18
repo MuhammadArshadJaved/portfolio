@@ -1,0 +1,163 @@
+{% load static %}
+<html class="scroll-smooth light-theme" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>{% block title %}{{ profile.title }} | {{ profile.full_name }}{% endblock %}</title>
+
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Plus Jakarta Sans, Space Grotesk, and JetBrains Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN with forms and container queries plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Custom Tailwind Config for theme tokens -->
+  <script src="{% static 'js/tailwind-config.js' %}"></script>
+  <!-- Separated Theme & Component Styles -->
+  <link rel="stylesheet" href="{% static 'css/theme.css' %}"/>
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="font-sans antialiased min-h-screen selection:bg-[#10B981]/30 selection:text-white relative overflow-x-hidden">
+  <!-- Smooth Ambient Radial Glow Auras (Clean, without grid lines) -->
+  <div class="ambient-glow-emerald top-[-120px] left-[-100px]"></div>
+  <div class="ambient-glow-teal top-[450px] right-[-150px]"></div>
+
+  <!-- BEGIN: GlobalNavBar -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl border-b transition-all duration-300" data-purpose="global-navigation" style="background-color: var(--bg-header); border-color: var(--border-subtle);">
+    <div class="w-full px-4 sm:px-6 md:px-10 lg:px-12 2xl:px-16 h-20 flex items-center justify-between relative z-10">
+      
+      <!-- Logo Avatar & Profile Identity -->
+      <a class="flex items-center gap-3.5 group focus:outline-none flex-shrink-0" href="#">
+        <!-- Replaced MAJ box with profile-img.jpg -->
+        <div class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden ring-2 ring-emerald-500/40 group-hover:ring-emerald-500 transition-all duration-300 shadow-md flex-shrink-0 bg-slate-800">
+          <img src="{% static 'images/profile-img.jpg' %}" alt="{{ profile.full_name }}" class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105" />
+          <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-slate-900"></span>
+        </div>
+        
+        <div>
+          <div class="font-bold text-base sm:text-lg tracking-tight theme-heading flex items-center font-display">
+            <span>{{ profile.full_name }}</span>
+          </div>
+          <p class="text-xs theme-body hidden sm:block font-medium">{{ profile.current_role }}</p>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Anchors (Centered & Spaced Out) -->
+      <nav class="hidden lg:flex items-center gap-8 xl:gap-10 text-sm font-medium theme-body" data-purpose="nav-links">
+        <a class="hover:text-emerald-400 transition-colors py-1 tracking-wide" href="#services" style="color: var(--text-heading);">Services</a>
+        <a class="hover:text-emerald-400 transition-colors py-1 tracking-wide" href="#projects" style="color: var(--text-heading);">Projects</a>
+        <a class="hover:text-emerald-400 transition-colors py-1 flex items-center gap-1.5 tracking-wide" href="#map-section" style="color: var(--text-heading);">
+          <span>GIS Console</span>
+          <span class="w-1.5 h-1.5 rounded-full" style="background-color: var(--btn-primary-bg);"></span>
+        </a>
+        <a class="hover:text-emerald-400 transition-colors py-1 tracking-wide" href="#timeline" style="color: var(--text-heading);">Career Track</a>
+        <a class="hover:text-emerald-400 transition-colors py-1 tracking-wide" href="#contact" style="color: var(--text-heading);">Contact</a>
+      </nav>
+
+      <!-- Right Actions: Theme Toggle & Contact Button -->
+      <div class="flex items-center gap-3">
+        <!-- Minimalist Glass Theme Toggle Button -->
+        <button 
+          aria-label="Switch to Dark Mode" 
+          class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-mono font-medium theme-card hover:border-emerald-500/50 transition-all cursor-pointer active:scale-95" 
+          id="theme-toggle" 
+          type="button"
+          title="Switch to Dark Mode"
+        >
+          <span class="text-xs transition-transform duration-300" id="theme-icon">🌙</span>
+          <span id="theme-label" style="color: var(--text-heading);">Dark</span>
+        </button>
+
+        <!-- Get In Touch Primary CTA -->
+        <a class="hidden sm:inline-flex px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl theme-btn-primary text-xs sm:text-sm font-semibold transition-all items-center gap-2 shadow-sm" href="#contact">
+          <span>Get in Touch</span>
+          <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button 
+          id="mobile-menu-btn"
+          type="button"
+          class="lg:hidden p-2 rounded-xl theme-card hover:border-emerald-500/50 transition-all"
+          style="color: var(--text-heading);"
+          aria-label="Toggle mobile menu"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden w-full border-t px-4 py-4 backdrop-blur-2xl space-y-3" style="background-color: var(--bg-header); border-color: var(--border-subtle);">
+      <a class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-colors" href="#services" style="color: var(--text-heading);">Services</a>
+      <a class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-colors" href="#projects" style="color: var(--text-heading);">Projects</a>
+      <a class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-colors" href="#map-section" style="color: var(--text-heading);">GIS Console</a>
+      <a class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-colors" href="#timeline" style="color: var(--text-heading);">Career Track</a>
+      <a class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-colors" href="#contact" style="color: var(--text-heading);">Contact</a>
+      <div class="pt-2 border-t" style="border-color: var(--border-subtle);">
+        <a class="w-full py-2.5 rounded-xl theme-btn-primary text-xs font-semibold flex items-center justify-center gap-2" href="#contact">
+          <span>Get in Touch</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+  <!-- END: GlobalNavBar -->
+
+  <!-- BEGIN: Main Content Block (Expansive, Full-Width Responsive) -->
+  <div class="relative z-10 w-full">
+    {% block content %}
+    {% endblock %}
+  </div>
+  <!-- END: Main Content Block -->
+
+  <!-- BEGIN: Scroll Jump Button (bottom-right) -->
+<button
+  id="scroll-jump-btn"
+  type="button"
+  aria-label="Scroll to bottom"
+  title="Scroll to bottom"
+  class="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full theme-card flex items-center justify-center shadow-lg hover:border-emerald-500/50 hover:translate-y-[-2px] transition-all duration-300 cursor-pointer opacity-0 pointer-events-none"
+>
+  <!-- Down arrow (shown near top) -->
+  <svg id="scroll-icon-down" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="color: var(--btn-primary-bg);">
+    <path d="M12 5v14m0 0l-6-6m6 6l6-6"/>
+  </svg>
+  <!-- Up arrow (shown when scrolled) -->
+  <svg id="scroll-icon-up" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="color: var(--btn-primary-bg);">
+    <path d="M12 19V5m0 0l-6 6m6-6l6 6"/>
+  </svg>
+</button>
+<!-- END: Scroll Jump Button -->
+
+  <!-- BEGIN: GlobalFooter -->
+  <footer class="border-t py-12 text-xs transition-colors relative z-10" data-purpose="global-footer" style="background-color: var(--bg-page); border-color: var(--border-subtle);">
+    <div class="w-full px-4 sm:px-6 md:px-10 lg:px-12 2xl:px-16 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full overflow-hidden ring-1 ring-emerald-500/40 flex-shrink-0 bg-slate-800">
+          <img src="{% static 'images/profile-img.jpg' %}" alt="{{ profile.full_name }}" class="w-full h-full object-cover object-top" />
+        </div>
+        <p style="color: var(--text-muted);">© {% now "Y" %} {{ profile.full_name }} · Lead Full-Stack GIS App Developer · {{ profile.location }}.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-6 font-mono text-[11px]" style="color: var(--text-muted);">
+        <a class="hover:text-emerald-400 transition-colors" href="#services">Services</a>
+        <a class="hover:text-emerald-400 transition-colors" href="#projects">Projects</a>
+        <a class="hover:text-emerald-400 transition-colors" href="#map-section">GIS Console</a>
+        <a class="hover:text-emerald-400 transition-colors" href="#timeline">Career Track</a>
+        <a class="hover:text-emerald-400 transition-colors" href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+  <!-- END: GlobalFooter -->
+
+  <!-- Dynamic Application Scripts -->
+  <script src="{% static 'js/main.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,231 @@
+/* ==========================================================================
+   Geospatial Portal - Executive Theme & Component Stylesheet
+   Refined Dark/Light Modern Palette with Spatial Glassmorphism & Depth
+   ========================================================================== */
+
+:root,
+html.light-theme {
+  /* LIGHT MODE (DEFAULT): Editorial Studio Pure Light Mode */
+  --bg-page: #F8FAFC;
+  --bg-card: rgba(255, 255, 255, 0.90);
+  --bg-card-solid: #FFFFFF;
+  --bg-card-subtle: rgba(241, 245, 249, 0.85);
+  --bg-header: rgba(248, 250, 252, 0.88);
+  
+  --border-subtle: #E2E8F0;
+  --border-muted: #F1F5F9;
+  --border-hover: #CBD5E1;
+  --border-glow: rgba(5, 150, 105, 0.25);
+  
+  --text-heading: #0F172A;
+  --text-body: #475569;
+  --text-body-strong: #1E293B;
+  --text-muted: #64748B;
+  
+  /* Accent: Corporate Deep Emerald */
+  --btn-primary-bg: #065F46;
+  --btn-primary-hover: #047857;
+  --btn-primary-text: #FFFFFF;
+  --accent-glow: rgba(6, 95, 70, 0.20);
+  
+  --badge-bg: #ECFDF5;
+  --badge-text: #065F46;
+  --badge-border: #A7F3D0;
+
+  --tag-bg: #F1F5F9;
+  --tag-text: #475569;
+  --tag-border: #E2E8F0;
+
+  --map-bg: #F1F5F9;
+  --map-grid-color: rgba(0, 0, 0, 0.04);
+  --map-vector-stroke: rgba(5, 150, 105, 0.22);
+  
+  --glass-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+html.dark-theme,
+html.dark {
+  /* DARK MODE: Executive Charcoal / Deep Void Slate */
+  --bg-page: #0d0e12;
+  --bg-card: rgba(22, 24, 30, 0.78);
+  --bg-card-solid: #15171d;
+  --bg-card-subtle: rgba(26, 29, 36, 0.65);
+  --bg-header: rgba(13, 14, 18, 0.85);
+  
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-muted: rgba(255, 255, 255, 0.04);
+  --border-hover: rgba(52, 211, 153, 0.45);
+  --border-glow: rgba(16, 185, 129, 0.35);
+  
+  --text-heading: #F9FAFB;
+  --text-body: #94A3B8;
+  --text-body-strong: #E2E8F0;
+  --text-muted: #64748B;
+  
+  /* Accent: Vibrant High-Tech Emerald / Spatial Sage */
+  --btn-primary-bg: #059669;
+  --btn-primary-hover: #10B981;
+  --btn-primary-text: #FFFFFF;
+  --accent-glow: rgba(16, 185, 129, 0.35);
+  
+  --badge-bg: rgba(6, 78, 59, 0.35);
+  --badge-text: #6EE7B7;
+  --badge-border: rgba(16, 185, 129, 0.30);
+
+  --tag-bg: rgba(30, 34, 43, 0.75);
+  --tag-text: #94A3B8;
+  --tag-border: rgba(255, 255, 255, 0.08);
+
+  --map-bg: #0b0c10;
+  --map-grid-color: rgba(255, 255, 255, 0.03);
+  --map-vector-stroke: rgba(16, 185, 129, 0.25);
+  
+  --glass-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-body);
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Glassmorphic Component Card */
+.theme-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-card:hover {
+  border-color: var(--border-hover);
+}
+
+.theme-card-subtle {
+  background-color: var(--bg-card-subtle);
+  border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.theme-heading {
+  color: var(--text-heading);
+}
+
+.theme-body {
+  color: var(--text-body);
+}
+
+/* Primary Accent Buttons */
+.theme-btn-primary {
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  box-shadow: 0 2px 10px -1px var(--accent-glow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-btn-primary:hover {
+  background-color: var(--btn-primary-hover);
+  box-shadow: 0 6px 20px -2px var(--accent-glow);
+  transform: translateY(-1px);
+}
+
+.theme-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Glowing Neon Pills & Badges */
+.theme-badge {
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  border: 1px solid var(--badge-border);
+  letter-spacing: 0.025em;
+}
+
+.theme-tag {
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  border: 1px solid var(--tag-border);
+  transition: all 0.2s ease;
+}
+
+.theme-tag:hover {
+  border-color: var(--border-hover);
+  color: var(--text-heading);
+}
+
+/* Ambient Radial Mesh Background Glows */
+.ambient-glow-emerald {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0) 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-glow-teal {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.09) 0%, rgba(14, 165, 233, 0) 70%);
+  filter: blur(70px);
+  pointer-events: none;
+  z-index: 0;
+}
+/* Smooth clean background without grid lines */
+
+/* Status Ping Beacon */
+.status-beacon-ring {
+  position: relative;
+}
+.status-beacon-ring::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  background-color: var(--btn-primary-bg);
+  opacity: 0.4;
+  animation: beaconPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes beaconPing {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  75%, 100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Gradient Text Shimmer */
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #047857 0%, #065f46 60%, #064e3b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+html.dark-theme .text-gradient-emerald,
+html.dark .text-gradient-emerald {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Crisp Clean Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}

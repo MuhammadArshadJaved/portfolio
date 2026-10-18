@@ -1,0 +1,169 @@
+/* ==========================================================================
+   CesiumJS Cartographic Console - Advanced WebGL Map Stylesheet
+   Executive Spatial Command Layout, HUD Overlays & Holographic Card Aesthetics
+   ========================================================================== */
+
+/* Map Viewport Wrapper */
+.cesium-map-wrapper {
+  position: relative;
+  width: 100%;
+  background-color: var(--map-bg);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+/* Cesium Container Mount */
+#cesiumContainer {
+  width: 100%;
+  height: 520px;
+  min-height: 360px;
+  background-color: #0b0c10;
+  overflow: hidden;
+  position: relative;
+}
+
+@media (min-width: 1536px) {
+  #cesiumContainer {
+    height: 600px;
+  }
+}
+
+@media (max-width: 1024px) {
+  #cesiumContainer {
+    height: 460px;
+  }
+}
+
+@media (max-width: 640px) {
+  #cesiumContainer {
+    height: 380px;
+  }
+}
+
+/* Cesium Canvas adjustments */
+#cesiumContainer canvas {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 1rem;
+  outline: none;
+}
+
+/* Font typography in Cesium */
+.cesium-widget,
+.cesium-widget canvas {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif !important;
+}
+
+/* Subtle credits */
+.cesium-viewer-bottom,
+.cesium-widget-credits {
+  font-size: 9px !important;
+  opacity: 0.25 !important;
+  transition: opacity 0.2s ease;
+}
+.cesium-viewer-bottom:hover,
+.cesium-widget-credits:hover {
+  opacity: 0.8 !important;
+}
+
+/* Fullscreen Button Override */
+.cesium-viewer-fullscreenContainer {
+  bottom: 3.75rem !important;
+  right: 1.25rem !important;
+  z-index: 25 !important;
+}
+
+.cesium-button.cesium-fullscreenButton {
+  background: var(--bg-card-solid) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 0.75rem !important;
+  fill: var(--text-heading) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 32px !important;
+  height: 32px !important;
+  padding: 4px !important;
+}
+
+.cesium-button.cesium-fullscreenButton:hover {
+  background: var(--border-subtle) !important;
+  border-color: var(--border-hover) !important;
+  transform: scale(1.05);
+}
+
+/* 2D / 3D Dimension Morph Toggle Button */
+.map-toggle-btn {
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  border-color: var(--badge-border);
+  box-shadow: 0 2px 8px -2px rgba(16, 185, 129, 0.2);
+}
+
+.map-toggle-btn:hover {
+  border-color: var(--border-hover);
+  background-color: rgba(6, 78, 59, 0.5);
+  transform: translateY(-1px);
+}
+
+.map-toggle-btn.mode-2d {
+  background-color: var(--btn-primary-bg);
+  color: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0 2px 12px -1px var(--accent-glow);
+}
+
+/* Top Telemetry HUD Overlay */
+.map-hud-readout {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.05em;
+}
+
+/* Sleek Interactive Holographic Data Card Popup Overlay */
+.map-popup-card {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 35;
+  max-width: 330px;
+  width: calc(100% - 2.5rem);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-glow);
+  border-radius: 1.125rem;
+  padding: 1.125rem 1.25rem;
+  box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.55), 0 10px 15px -5px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.map-popup-card.hidden {
+  display: none;
+  opacity: 0;
+  transform: scale(0.94) translateY(-8px);
+  pointer-events: none;
+}
+
+.map-popup-card.visible {
+  display: block;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  animation: popupSlideIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Bottom Telemetry Bar */
+.map-telemetry-bar {
+  background-color: var(--bg-header);
+  border-color: var(--border-subtle);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 20;
+}

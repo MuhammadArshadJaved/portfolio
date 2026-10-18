@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<!-- Official CesiumJS CDN Stylesheet -->
+<link href="https://cesium.com/downloads/cesiumjs/releases/1.120/Build/Cesium/Widgets/widgets.css" rel="stylesheet"/>
+<!-- Dedicated Cartographic Console Stylesheet -->
+<link href="{% static 'css/map-style.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+<main class="w-full max-w-[1780px] mx-auto px-4 sm:px-6 md:px-10 lg:px-12 2xl:px-16 py-8 sm:py-14 space-y-20 sm:space-y-28 relative">
+
+  <!-- BEGIN: HeroStageSection -->
+  <section class="grid grid-cols-1 xl:grid-cols-12 gap-8 lg:gap-10 2xl:gap-14 items-stretch" data-purpose="hero-stage">
+    <!-- Left Column: Personal Bio, Headline, Actions, Counters -->
+    <div class="xl:col-span-5 2xl:col-span-5 flex flex-col justify-between space-y-7">
+      <div class="space-y-6">
+        <!-- Status Pill & Location -->
+        <div class="flex flex-wrap items-center gap-2.5">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium theme-card border shadow-sm">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span class="font-medium" style="color: var(--text-heading);">📍 {{ profile.location }}</span>
+            <span class="font-mono text-[11px] ml-1 pl-2.5 border-l" style="border-color: var(--border-subtle); color: var(--text-muted);">{{ profile.affiliation }}</span>
+          </div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono theme-badge">
+            <span class="text-xs">⚡</span> Enterprise Spatial Intelligence
+          </span>
+        </div>
+
+        <!-- Main Headline with Elegant Gradient Display -->
+        <h1 class="text-3xl sm:text-4xl 2xl:text-5xl font-extrabold tracking-tight theme-heading leading-[1.14] font-display">
+          Crafting enterprise <span class="text-gradient-emerald">spatial intelligence</span>, WebGIS platforms &amp; resilient data infrastructure.
+        </h1>
+
+        <!-- Bio Paragraph -->
+        <p class="text-base sm:text-lg theme-body leading-relaxed font-normal">
+          {{ profile.bio }}
+        </p>
+
+        <!-- Action Strip: Download Button & Contact Links -->
+        <div class="flex flex-wrap items-center gap-3 pt-1" data-purpose="hero-actions">
+          <!-- Primary CV Download Button with Glow -->
+          <a class="px-5 py-3 rounded-xl theme-btn-primary font-semibold text-sm flex items-center gap-2.5 transition-all shadow-glow-sm hover:shadow-glow-md active:scale-95 cursor-pointer" href="{{ profile.cv_download_url }}">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <span>Download CV / Resume</span>
+          </a>
+
+          <!-- Email Link Button with Direct Copy -->
+          <a aria-label="Send Email" class="px-4 py-3 rounded-xl theme-card text-xs font-mono hover:border-emerald-500/40 transition-all flex items-center gap-2 active:scale-95 group" href="mailto:{{ profile.email }}">
+            <svg class="w-4 h-4 transition-colors group-hover:text-emerald-400" fill="none" stroke="currentColor" style="color: var(--btn-primary-bg);" viewbox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <span class="hidden sm:inline font-medium" style="color: var(--text-body-strong);">{{ profile.email }}</span>
+          </a>
+
+          <!-- Phone Direct -->
+          <a aria-label="Call Direct" class="p-3 rounded-xl theme-card hover:border-emerald-500/40 transition-all flex items-center active:scale-95 group" href="tel:{{ profile.phone }}" title="{{ profile.phone }}">
+            <svg class="w-4 h-4 transition-colors group-hover:text-emerald-400" fill="none" stroke="currentColor" style="color: var(--btn-primary-bg);" viewbox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </a>
+
+          <!-- GitHub Profile -->
+          <a aria-label="GitHub Profile" class="p-3 rounded-xl theme-card hover:border-emerald-500/40 transition-all flex items-center active:scale-95 group" href="{{ profile.github_url }}" rel="noopener noreferrer" target="_blank" title="GitHub / MuhammadArshadJaved">
+            <svg class="w-4 h-4 transition-colors group-hover:text-emerald-400" fill="currentColor" style="color: var(--text-body-strong);" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Metrics Cluster -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t" data-purpose="metrics-cluster" style="border-color: var(--border-subtle);">
+        {% for metric in metrics %}
+        <div class="theme-card-subtle p-4 rounded-2xl hover:border-emerald-500/40 transition-all duration-300 relative group overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="text-3xl font-extrabold tracking-tight font-display flex items-baseline" style="color: var(--text-heading);">
+            <span>{{ metric.value }}</span>
+            <span class="{% if metric.suffix == 'Yrs' %}text-xs font-semibold uppercase ml-1{% else %}text-emerald-400 ml-0.5{% endif %}">{{ metric.suffix }}</span>
+          </div>
+          <div class="text-xs font-medium theme-body mt-1.5 font-mono">{{ metric.label }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Right Column: Minimal Cartographic Inspection Console Component -->
+    <div class="xl:col-span-7 2xl:col-span-7 flex flex-col justify-stretch" id="map-section">
+      {% include "geospatial_portal/components/_map_console.html" %}
+    </div>
+  </section>
+  <!-- END: HeroStageSection -->
+
+  <!-- BEGIN: ServicesSection -->
+  <section class="space-y-8 scroll-mt-28 relative" data-purpose="services-section" id="services">
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b pb-6" style="border-color: var(--border-subtle);">
+      <div>
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span class="text-xs font-mono uppercase tracking-wider font-semibold text-emerald-400">Spatial Engineering &amp; Architecture</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight theme-heading font-display">Core Geospatial Services</h2>
+      </div>
+      <p class="text-sm theme-body max-w-md font-normal leading-relaxed">Enterprise GIS infrastructure, high-concurrency map engines, and AI-driven earth observation systems built for national and multilateral agencies.</p>
+    </div>
+
+    <!-- 3-Column Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% for service in services %}
+      <article class="theme-card rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 hover:translate-y-[-4px] hover:shadow-glow-sm relative overflow-hidden group" data-purpose="service-card">
+        <!-- Top accent gradient line on hover -->
+        <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-emerald-500 via-teal-400 to-transparent opacity-40 group-hover:opacity-100 transition-opacity"></div>
+
+        <div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-12 h-12 rounded-2xl theme-card-subtle flex items-center justify-center text-xl shadow-inner border group-hover:scale-110 transition-transform" style="border-color: var(--border-subtle);">
+              {{ service.icon }}
+            </div>
+            <span class="text-[11px] font-mono font-bold tracking-wider transition-colors group-hover:text-emerald-400" style="color: var(--text-muted);">
+              {{ service.service_code }}
+            </span>
+          </div>
+
+          <h3 class="text-lg font-bold theme-heading mb-3 tracking-tight font-display">{{ service.title }}</h3>
+          <p class="text-xs sm:text-sm theme-body leading-relaxed mb-6 font-normal">
+            {{ service.description }}
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 pt-5 border-t" style="border-color: var(--border-subtle);">
+          {% for tag in service.get_tag_list %}
+          <span class="px-2.5 py-1 text-[11px] font-mono theme-tag rounded-lg font-medium">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  <!-- END: ServicesSection -->
+
+  <!-- BEGIN: ProjectsShowcaseSection -->
+  <section class="space-y-8 scroll-mt-28" data-purpose="projects-section" id="projects">
+    <!-- Section Header & Filter Tabs -->
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b pb-6" style="border-color: var(--border-subtle);">
+      <div>
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span class="text-xs font-mono uppercase tracking-wider font-semibold text-emerald-400">Flagship Implementations</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight theme-heading font-display">Featured Spatial Projects</h2>
+      </div>
+
+      <!-- Filter Tab Bar as Sleek Segmented Control -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-medium p-1 rounded-2xl theme-card-subtle border" style="border-color: var(--border-subtle);" data-purpose="filter-tabs">
+        {% for cat in project_categories %}
+        <button class="px-4 py-2 rounded-xl {% if forloop.first %}theme-btn-primary font-semibold shadow-sm{% else %}theme-card hover:text-emerald-400{% endif %} whitespace-nowrap transition-all duration-200 active:scale-95" data-filter="{{ cat.id }}">
+          {{ cat.label }}
+        </button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- 6-Item Card Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for project in projects %}
+      <article class="theme-card rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:translate-y-[-4px] hover:shadow-glow-sm group border" style="border-color: var(--border-subtle);" data-purpose="project-card" data-category="{{ project.category }}">
+        <div class="theme-card-subtle p-6 border-b relative" style="border-color: var(--border-subtle);">
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-bold theme-badge tracking-wider">{{ project.category_label }}</span>
+            <span class="text-xs font-mono font-medium" style="color: var(--text-muted);">{{ project.year }}</span>
+          </div>
+
+          <!-- Dynamic Feature Box / Interactive Schematic Preview -->
+          {% if project.get_badge_list %}
+          <div class="space-y-2.5">
+            <div class="flex items-center gap-2">
+              {% for badge in project.get_badge_list %}
+              <span class="px-2 py-0.5 text-[10px] font-mono rounded-md theme-tag">{{ badge }}</span>
+              {% endfor %}
+            </div>
+            <div class="theme-card rounded-xl p-3 flex items-center justify-between shadow-inner">
+              <span class="text-[11px] font-mono font-semibold" style="color: var(--text-heading);">{{ project.card_info_title }}</span>
+              <span class="text-[9px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">{{ project.card_info_detail }}</span>
+            </div>
+          </div>
+          {% elif project.card_info_extra %}
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+              <span style="color: var(--text-body-strong);">{{ project.card_info_title }}</span>
+              <span class="text-emerald-400 font-semibold">{{ project.card_info_detail }}</span>
+            </div>
+            <div class="h-2 w-full theme-card rounded-full overflow-hidden p-0.5">
+              <div class="h-full w-4/5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-400"></div>
+            </div>
+            <div class="text-[10px] font-mono" style="color: var(--text-muted);">{{ project.card_info_extra }}</div>
+          </div>
+          {% elif project.card_type == 'indicator' %}
+          <div class="theme-card rounded-xl p-3 flex items-center justify-between shadow-inner">
+            <div class="space-y-0.5">
+              <div class="text-[10px] font-mono" style="color: var(--text-muted);">{{ project.card_info_title }}</div>
+              <div class="text-xs font-mono font-semibold" style="color: var(--text-heading);">{{ project.card_info_detail }}</div>
+            </div>
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+          </div>
+          {% elif project.card_type == 'code' %}
+          <div class="theme-card rounded-xl p-3 font-mono text-[10px] shadow-inner" style="color: var(--text-body);">
+            <span class="text-emerald-400 font-semibold">{{ project.card_info_title }}</span> {{ project.card_info_detail }}
+          </div>
+          {% elif project.card_type == 'banner' %}
+          <div class="theme-card rounded-xl p-3 font-mono text-[10px] shadow-inner flex items-center gap-2" style="color: var(--text-body);">
+            <span class="text-emerald-400">🛰️</span>
+            <span>{{ project.card_info_title }}</span>
+          </div>
+          {% else %}
+          <div class="flex items-center justify-between theme-card p-3 rounded-xl shadow-inner">
+            <span class="text-[10px] font-mono" style="color: var(--text-body);">{{ project.card_info_title }}</span>
+            <span class="text-xs font-mono font-semibold text-emerald-400">{{ project.card_info_detail }}</span>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+          <div>
+            <h3 class="text-base font-bold theme-heading tracking-tight font-display group-hover:text-emerald-400 transition-colors">{{ project.title }}</h3>
+            <p class="text-xs theme-body mt-2 leading-relaxed font-normal">{{ project.description }}</p>
+          </div>
+
+          <div class="pt-4 border-t flex items-center justify-between" style="border-color: var(--border-subtle);">
+            <span class="text-[11px] font-mono" style="color: var(--text-muted);">{{ project.tech_stack }}</span>
+            <a class="text-xs font-bold transition-all flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 group-hover:translate-x-1" href="{{ project.link_url }}">
+              <span>View Case</span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  <!-- END: ProjectsShowcaseSection -->
+
+  <!-- BEGIN: CareerTimelineSection -->
+  <section class="space-y-10 scroll-mt-28" data-purpose="timeline-section" id="timeline">
+    <!-- Section Header -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b pb-6" style="border-color: var(--border-subtle);">
+      <div>
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span class="text-xs font-mono uppercase tracking-wider font-semibold text-emerald-400">Professional Journey</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight theme-heading font-display">Career Timeline</h2>
+      </div>
+      <p class="text-sm theme-body max-w-sm font-normal">Chronological evolution across engineering consulting firms, multilateral projects, and national spatial data infrastructure.</p>
+    </div>
+
+    <!-- Linear Connector Timeline Track -->
+    <div class="relative pt-6">
+      <!-- Desktop Connector Line with Glowing Gradient -->
+      <div class="hidden lg:block absolute top-[3.25rem] left-8 right-8 h-[2px] bg-gradient-to-r from-slate-300 via-emerald-600/40 to-emerald-500 dark:from-slate-700 dark:via-emerald-500/50 dark:to-emerald-400"></div>
+
+      <!-- Milestone Nodes Container -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-4 relative z-10">
+        {% for item in timeline %}
+        <div class="relative group" data-purpose="timeline-node">
+          <!-- Dot on track -->
+          <div class="hidden lg:flex w-9 h-9 rounded-full theme-card items-center justify-center mx-auto mb-6 {% if item.is_current %}border-2 border-emerald-500 shadow-glow-sm bg-emerald-500/15{% else %}border{% endif %}" {% if not item.is_current %}style="border-color: var(--border-subtle);"{% endif %}>
+            <div class="w-2.5 h-2.5 rounded-full {% if item.is_current %}bg-emerald-500 animate-pulse{% else %}bg-slate-400 dark:bg-slate-500{% endif %}"></div>
+          </div>
+
+          <div class="theme-card rounded-3xl p-6 lg:text-center transition-all duration-300 hover:translate-y-[-2px] {% if item.is_current %}border-emerald-500/50 shadow-glow-sm bg-emerald-500/5{% endif %}">
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold {% if item.is_current %}theme-badge{% else %}theme-tag{% endif %} mb-2.5 tracking-wider">
+              {{ item.period }}
+            </span>
+            <h4 class="text-sm font-bold theme-heading tracking-tight font-display">{{ item.role }}</h4>
+            <p class="text-xs theme-body mt-2 leading-relaxed font-normal">{{ item.description }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- END: CareerTimelineSection -->
+
+  <!-- BEGIN: ContactCTASection -->
+  <section class="scroll-mt-28" data-purpose="contact-section" id="contact">
+    <div class="theme-card rounded-3xl p-8 sm:p-14 relative overflow-hidden transition-all border border-emerald-500/20 shadow-2xl">
+      <!-- Ambient Glow Behind CTA -->
+      <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-2xl space-y-6 relative z-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono font-medium theme-badge">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>📍 {{ profile.location }} · Strategic Enterprise Consultation</span>
+        </div>
+
+        <h2 class="text-3xl sm:text-4xl font-extrabold theme-heading tracking-tight font-display leading-[1.2]">
+          {{ profile.contact_cta_heading }}
+        </h2>
+
+        <p class="text-sm sm:text-base theme-body leading-relaxed font-normal">
+          {{ profile.contact_cta_text }}
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3.5 pt-2">
+          <a class="px-5 py-3 rounded-xl theme-btn-primary font-semibold text-sm transition-all flex items-center gap-2.5 shadow-glow-sm hover:shadow-glow-md active:scale-95" href="mailto:{{ profile.email }}">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <span>{{ profile.email }}</span>
+          </a>
+
+          <a class="px-5 py-3 rounded-xl theme-card text-sm font-semibold transition-all hover:border-emerald-500/40 flex items-center gap-2 active:scale-95" href="tel:{{ profile.phone }}">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <span style="color: var(--text-body-strong);">{{ profile.phone }}</span>
+          </a>
+
+          <a class="px-4 py-3 rounded-xl theme-card text-sm font-semibold transition-all hover:border-emerald-500/40 flex items-center gap-2 active:scale-95" href="{{ profile.github_url }}" rel="noopener noreferrer" target="_blank">
+            <svg class="w-4 h-4" fill="currentColor" style="color: var(--text-body-strong);" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path></svg>
+            <span style="color: var(--text-body-strong);">GitHub Profile</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END: ContactCTASection -->
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Official CesiumJS CDN Script -->
+<script src="https://cesium.com/downloads/cesiumjs/releases/1.120/Build/Cesium/Cesium.js"></script>
+<!-- Dedicated Cartographic Console WebGL Engine & Interactions -->
+<script src="{% static 'js/map-console.js' %}"></script>
+{% endblock %}
